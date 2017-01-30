@@ -1,0 +1,40 @@
+version: '2'
+services:
+
+    §§INSTANCE-stategraems:
+      image: fikipollo/stategraems
+      container_name: §§INSTANCE-stategraems
+      environment:
+        - EMS_ADMIN_USER=§§EMS_ADMIN_USER
+        - EMS_ADMIN_PASSWORD=§§EMS_ADMIN_PASSWORD
+        - MYSQL_ROOT_USER=§§MYSQL_ROOT_USER
+        - MYSQL_ROOT_PASSWORD=§§MYSQL_ROOT_PASSWORD
+        - MYSQL_DATABASE_NAME=§§MYSQL_DATABASE_NAME
+        - MYSQL_HOST=§§MYSQL_HOST
+        - MYSQL_EMS_USER=§§MYSQL_EMS_USER
+        - MYSQL_EMS_PASS=§§MYSQL_EMS_PASS
+      links:
+        - §§INSTANCE-stategraems-mysql:stategraems-mysql
+      depends_on:
+        - §§INSTANCE-stategraems-mysql
+      volumes_from:
+        - §§INSTANCE-stategraems-data
+      ports:
+        - "§§PORT:8080"
+
+    §§INSTANCE-stategraems-mysql:
+      image: mysql
+      container_name: §§INSTANCE-stategraems-mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=§§MYSQL_ROOT_PASSWORD
+      depends_on:
+        - §§INSTANCE-stategraems-data
+      volumes_from:
+        - §§INSTANCE-stategraems-data
+
+    §§INSTANCE-stategraems-data:
+      image: busybox
+      container_name: §§INSTANCE-stategraems-data
+      volumes:
+        - §§FOLDER/var/lib/mysql:/var/lib/mysql
+        - §§FOLDER/data:/data

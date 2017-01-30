@@ -1,0 +1,30 @@
+version: '2'
+services:
+
+    instance1-paintomics3:
+      image: fikipollo/paintomics3
+      container_name: instance1-paintomics3
+      links:
+        - instance1-paintomics3-mongo:paintomics3-mongo
+      depends_on:
+        - instance1-paintomics3-mongo
+      volumes_from:
+        - instance1-paintomics3-data
+      ports:
+        - "8080:80"
+
+    instance1-paintomics3-mongo:
+      image: mongo
+      container_name: instance1-paintomics3-mongo
+      depends_on:
+        - instance1-paintomics3-data
+      volumes_from:
+        - instance1-paintomics3-data
+
+    instance1-paintomics3-data:
+      image: busybox
+      container_name: instance1-paintomics3-data
+      volumes:
+        #We use volumes for persistent storage of the EMS data. Choose the directories where the data should be stored.
+        - /home/rhernandez/Desktop/caca/test_docker/data:/data
+        - /home/rhernandez/Desktop/caca/test_docker/conf:/usr/local/apache2/htdocs/src/conf/
