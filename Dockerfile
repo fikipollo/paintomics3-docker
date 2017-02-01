@@ -17,30 +17,22 @@ RUN apt-get update \
 
 RUN R --no-save -e "install.packages('amap', repos='http://cran.us.r-project.org'); q();"
 
-RUN wget -O /tmp/paintomics.zip https://github.com/fikipollo/paintomics3/archive/release/last.zip \
-    && unzip /tmp/paintomics.zip -d /tmp/paintomics \
+RUN wget -O /tmp/paintomics.zip https://github.com/fikipollo/paintomics3/archive/develop.zip
+RUN unzip /tmp/paintomics.zip -d /tmp/paintomics \
     && mv /tmp/paintomics/*/* /usr/local/apache2/htdocs/ \
     && rm -r /tmp/paintomics/ \
-    && rm /tmp/paintomics.zip \
-    && sed -i 's/application\.launch/#application\.launch/' /usr/local/apache2/htdocs/src/paintomics.py \
-		&& mkdir /usr/local/apache2/htdocs/src/resources \
-		&& cp /usr/local/apache2/htdocs/src/conf/example_serverconf.py /usr/local/apache2/htdocs/src/resources/example_serverconf.py \
-		&& cp /usr/local/apache2/htdocs/src/conf/logging.cfg /usr/local/apache2/htdocs/src/resources/logging.cfg \
-		&& rm /usr/local/apache2/htdocs/src/conf/example_serverconf.py \
-		&& rm /usr/local/apache2/htdocs/src/conf/logging.cfg \
-		&& sed -i 's/\/home\/rafa\/paintomics3\/PaintomicsServer/\/usr\/local\/apache2\/htdocs/' /usr/local/apache2/htdocs/src/resources/example_serverconf.py \
-		&& sed -i 's/\/home\/rafa\/paintomics3\/PaintomicsServer/\/usr\/local\/apache2\/htdocs/' /usr/local/apache2/htdocs/src/resources/example_serverconf.py \
-    && sed -i 's/8080/80/' /usr/local/apache2/htdocs/src/resources/example_serverconf.py \
-		&& sed -i 's/localhost/paintomics3-mongo/' /usr/local/apache2/htdocs/src/resources/example_serverconf.py
+    && rm /tmp/paintomics.zip
+RUN sed -i 's/application\.launch/#application\.launch/' /usr/local/apache2/htdocs/PaintomicsServer/src/launch_server.py
 
+COPY configs/example_serverconf.py /usr/local/apache2/htdocs/PaintomicsServer/src/resources/example_serverconf.py
 COPY configs/entrypoint.sh /usr/bin/entrypoint.sh
 COPY configs/httpd.conf /usr/local/apache2/conf/httpd.conf
-COPY configs/paintomics.wsgi /usr/local/apache2/htdocs/paintomics.wsgi
+COPY configs/paintomics.wsgi /usr/local/apache2/htdocs/PaintomicsServer/paintomics.wsgi
 
 RUN chmod +x /usr/bin/entrypoint.sh
 RUN chown -R www-data:www-data /usr/local/apache2/htdocs/
 ##################### INSTALLATION END #####################
 
-VOLUME ["/usr/local/apache2/htdocs/src/conf/", "/data"]
+VOLUME ["/data/paintomics3"]
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]

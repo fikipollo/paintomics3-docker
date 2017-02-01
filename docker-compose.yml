@@ -2,8 +2,12 @@ version: '2'
 services:
 
     instance1-paintomics3:
-      image: fikipollo/paintomics3
+      image: fikipollo/paintomics
       container_name: instance1-paintomics3
+      environment:
+        - ADMIN_EMAIL=admin@paintomics.es #WILL BE USED FOR LOGIN AS ADMIN
+        - ADMIN_PASS=601f1889667efaebb33b8c12572835da3f027f78 #PASSWORD CODIFIED IN SHA1
+        - ADMIN_AFFILIATION=My awesome university
       links:
         - instance1-paintomics3-mongo:paintomics3-mongo
       depends_on:
@@ -25,6 +29,7 @@ services:
       image: busybox
       container_name: instance1-paintomics3-data
       volumes:
-        #We use volumes for persistent storage of the EMS data. Choose the directories where the data should be stored.
-        - /home/rhernandez/Desktop/caca/test_docker/data:/data
-        - /home/rhernandez/Desktop/caca/test_docker/conf:/usr/local/apache2/htdocs/src/conf/
+        #We use volumes for persistent storage of the PaintOmics data. Choose the directories where the data should be stored.
+        - /home/foo/instance1/data/paintomics3:/data/paintomics3
+        - /home/foo/instance1/data/db:/data/db
+        - /home/foo/instance1/conf:/usr/local/apache2/htdocs/PaintomicsServer/src/conf/

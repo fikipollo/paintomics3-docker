@@ -1,40 +1,34 @@
 version: '2'
 services:
 
-    §§INSTANCE-stategraems:
-      image: fikipollo/stategraems
-      container_name: §§INSTANCE-stategraems
+    §§INSTANCE-paintomics3:
+      image: fikipollo/paintomics
+      container_name: §§INSTANCE-paintomics3
       environment:
-        - EMS_ADMIN_USER=§§EMS_ADMIN_USER
-        - EMS_ADMIN_PASSWORD=§§EMS_ADMIN_PASSWORD
-        - MYSQL_ROOT_USER=§§MYSQL_ROOT_USER
-        - MYSQL_ROOT_PASSWORD=§§MYSQL_ROOT_PASSWORD
-        - MYSQL_DATABASE_NAME=§§MYSQL_DATABASE_NAME
-        - MYSQL_HOST=§§MYSQL_HOST
-        - MYSQL_EMS_USER=§§MYSQL_EMS_USER
-        - MYSQL_EMS_PASS=§§MYSQL_EMS_PASS
+        - ADMIN_EMAIL=§§ADMIN_EMAIL
+        - ADMIN_PASS=§§ADMIN_PASS
+        - ADMIN_AFFILIATION=§§ADMIN_AFFILIATION
       links:
-        - §§INSTANCE-stategraems-mysql:stategraems-mysql
+        - §§INSTANCE-paintomics3-mongo:paintomics3-mongo
       depends_on:
-        - §§INSTANCE-stategraems-mysql
+        - §§INSTANCE-paintomics3-mongo
       volumes_from:
-        - §§INSTANCE-stategraems-data
+        - §§INSTANCE-paintomics3-data
       ports:
-        - "§§PORT:8080"
+        - "§§PORT:80"
 
-    §§INSTANCE-stategraems-mysql:
-      image: mysql
-      container_name: §§INSTANCE-stategraems-mysql
-      environment:
-        - MYSQL_ROOT_PASSWORD=§§MYSQL_ROOT_PASSWORD
+    §§INSTANCE-paintomics3-mongo:
+      image: mongo
+      container_name: §§INSTANCE-paintomics3-mongo
       depends_on:
-        - §§INSTANCE-stategraems-data
+        - §§INSTANCE-paintomics3-data
       volumes_from:
-        - §§INSTANCE-stategraems-data
+        - §§INSTANCE-paintomics3-data
 
-    §§INSTANCE-stategraems-data:
+    §§INSTANCE-paintomics3-data:
       image: busybox
-      container_name: §§INSTANCE-stategraems-data
+      container_name: §§INSTANCE-paintomics3-data
       volumes:
-        - §§FOLDER/var/lib/mysql:/var/lib/mysql
-        - §§FOLDER/data:/data
+        - §§FOLDER/data/paintomics3:/data/paintomics3
+        - §§FOLDER/data/db:/data/db
+        - §§FOLDER/conf:/usr/local/apache2/htdocs/PaintomicsServer/src/conf/

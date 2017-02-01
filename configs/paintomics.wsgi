@@ -1,6 +1,6 @@
 import sys
 import os
 
-sys.path.insert(0, "/usr/local/apache2/htdocs")
+sys.path.insert(0, "/usr/local/apache2/htdocs/PaintomicsServer")
 
-from src.paintomics import app as application
+from src.launch_server import app as application
