@@ -131,6 +131,10 @@ cat <<EOF > $DATA_DIR/KEGG_DATA/last/species/species.json
 EOF
 fi
 
+
+#*********************************************************
+#STEP 6. CREATE THE DIRECTORY FOR USER DATA
+#*********************************************************
 if [ ! -d $DATA_DIR/CLIENT_TMP ]; then
 	echo "UNABLE TO FIND CLIENTS DIRECTORY, AUTOCREATING..."
 	mkdir $DATA_DIR/CLIENT_TMP
@@ -143,7 +147,7 @@ fi
 
 
 #*********************************************************
-#STEP 6. LAUNCH SERVICES
+#STEP 7. LAUNCH SERVICES
 #*********************************************************
 # Apache gets grumpy about PID files pre-existing
 rm -f /usr/local/apache2/logs/httpd.pid
