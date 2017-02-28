@@ -2,7 +2,7 @@ version: '2'
 services:
 
     instance1-paintomics3:
-      image: fikipollo/paintomics
+      image: fikipollo/paintomics3
       container_name: instance1-paintomics3
       environment:
         - ADMIN_EMAIL=admin@paintomics.es #WILL BE USED FOR LOGIN AS ADMIN

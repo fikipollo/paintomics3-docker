@@ -2,7 +2,7 @@ version: '2'
 services:
 
     §§INSTANCE-paintomics3:
-      image: fikipollo/paintomics
+      image: fikipollo/paintomics3
       container_name: §§INSTANCE-paintomics3
       environment:
         - ADMIN_EMAIL=§§ADMIN_EMAIL

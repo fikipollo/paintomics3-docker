@@ -21,8 +21,8 @@ fi
 ADMIN_USER="admin";
 SETTINGS_FILE="/usr/local/apache2/htdocs/PaintomicsServer/src/conf/serverconf.py"
 DATA_DIR="/data/paintomics3";
-#DATA_HOST="http://bioinfo.cipf.es/paintomics"
-DATA_HOST="http://172.17.0.1:8090"
+DATA_HOST="http://bioinfo.cipf.es/paintomics"
+#DATA_HOST="http://172.17.0.1:8090"
 #*********************************************************
 
 
@@ -36,6 +36,8 @@ if [ ! -f $SETTINGS_FILE ]; then
 	touch /usr/local/apache2/htdocs/PaintomicsServer/src/conf/__init__.py
 fi
 
+echo "WAITING 15 SECONDS FOR MONGO STARTING..."
+sleep 15
 
 #*********************************************************
 #STEP 2. CHECK IF THE PAINTOMICS DATABASES EXIST
@@ -117,7 +119,7 @@ if [[ "$exist" == "1" ]]; then #DATABASE NOT IN MONGO
 	echo "DOWNLOADING DATA (THIS MAY TAKE FEW MINUTES)..."
 	wget --quiet $DATA_HOST/paintomics-dbs.tar.gz --directory-prefix=/tmp/
 	echo "EXTRACTING AND INSTALLING DATA... "
-	tar -zxvf /tmp/paintomics-dbs.tar.gz -C /tmp/
+	tar -zxf /tmp/paintomics-dbs.tar.gz -C /tmp/
 	mv /tmp/paintomics-dbs/KEGG_DATA/ $DATA_DIR
 	chown -R www-data:www-data $DATA_DIR/KEGG_DATA/
 	mongorestore --host paintomics3-mongo  --db mmu-paintomics /tmp/paintomics-dbs/dump/mmu-paintomics/
