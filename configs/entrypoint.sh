@@ -21,8 +21,8 @@ fi
 ADMIN_USER="admin";
 SETTINGS_FILE="/usr/local/apache2/htdocs/PaintomicsServer/src/conf/serverconf.py"
 DATA_DIR="/data/paintomics3";
-#DATA_HOST="http://bioinfo.cipf.es/paintomics"
-DATA_HOST="http://172.17.0.1:8090"
+DATA_HOST="http://bioinfo.cipf.es/paintomics"
+#DATA_HOST="http://172.17.0.1:8090"
 #*********************************************************
 
 
