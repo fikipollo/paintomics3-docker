@@ -21,8 +21,8 @@ fi
 ADMIN_USER="admin";
 SETTINGS_FILE="/usr/local/apache2/htdocs/PaintomicsServer/src/conf/serverconf.py"
 DATA_DIR="/data/paintomics3";
-DATA_HOST="http://bioinfo.cipf.es/paintomics"
-#DATA_HOST="http://172.17.0.1:8090"
+#DATA_HOST="http://bioinfo.cipf.es/paintomics"
+DATA_HOST="http://172.17.0.1:8090"
 #*********************************************************
 
 
@@ -76,7 +76,7 @@ db.createCollection("userCollection");
 db.createCollection("fileCollection");
 db.createCollection("messageCollection");
 db.createCollection("counters");
-db.userCollection.insert({userID:"0",userName:"${ADMIN_USER}",email:"${ADMIN_EMAIL}",password:"${ADMIN_PASS}", affiliation:"${ADMIN_AFFILIATION}", activated:"True"});
+db.userCollection.insert({userID:0,userName:"${ADMIN_USER}",email:"${ADMIN_EMAIL}",password:"${ADMIN_PASS}", affiliation:"${ADMIN_AFFILIATION}", activated:"True"});
 db.counters.insert({_id:"userID",sequence_value:1});
 db.userCollection.ensureIndex( { userID : 1 } );
 db.jobInstanceCollection.ensureIndex( { jobID: 1, userID : 1 } );
@@ -91,7 +91,7 @@ fi
 
 
 #*********************************************************
-#STEP 4. CHECK IF THE DATABASES FRO DEFAULT SPECIES EXIST
+#STEP 4. CHECK IF THE DATABASES FOR DEFAULT SPECIES EXIST
 #*********************************************************
 mongo --host paintomics3-mongo <<EOF
 function db_exists(db_name) {
@@ -126,11 +126,6 @@ if [[ "$exist" == "1" ]]; then #DATABASE NOT IN MONGO
 	mongorestore --host paintomics3-mongo  --db global-paintomics /tmp/paintomics-dbs/dump/global-paintomics/
 	rm -r  /tmp/paintomics-dbs
 	rm -r  /tmp/paintomics-dbs.tar.gz
-cat <<EOF > $DATA_DIR/KEGG_DATA/last/species/species.json
-{"success": true, "species": [
-        {"name": "Mus musculus (mouse)", "value": "mmu"}
-]}
-EOF
 fi
 
 
